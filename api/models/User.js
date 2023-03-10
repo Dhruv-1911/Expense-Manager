@@ -27,10 +27,10 @@ module.exports = {
       return _.isString(value) && value.length >= 8;
     }
   },
-  // accounts:{
-  //   collection:'account',
-  //   via:'User'
-  // }
+  accounts:{
+    collection:'account',
+    via:'User'
+  }
 }
 };
 

@@ -7,8 +7,9 @@
 
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
+const cookieparser = require("cookie-parser")
 // const Account = require('../models/Account');
-// const User = require('../models/User');
+
 // const  uuid = require('uuid');
 
 
@@ -18,48 +19,55 @@ module.exports = {
   list_user: async (req, res) => {
     try {
       const users = await User.find()
+      .populate("accounts")
+      // const account = await Account.find()
+      // console.log( 'user' ,users[0].accounts[0].A_type)
+      // console.log( 'user' ,users)
       res.send({
         count: users.length,
-        users: users
+        users:users
       })
     } catch (error) {
       res.status(404).json({
-        message: "user not found"
+       message: error  
       })
     }
   },
 
   //use sign_up
   sign_up: async (req, res) => {
-    const { name, email, password } = req.body
-    const hash = await bcrypt.hash(password, 10)
-    const user = await User.create(
-      { // _id:uuid.v4(),
-        name: name,
-        email: email,
-        password: hash
-      }
-    ).fetch()
-    // .populate("accounts")
-        // const user_f = await User.findOne({ id: user.id })
-        // console.log(user_f);
-        console.log( "user",user.id)
-    // //    jwt token
+    try {
+      
+      const { name, email, password } = req.body
+      const hash = await bcrypt.hash(password, 10)
+      const user = await User.create(
+        { // _id:uuid.v4(),
+          name: name,
+          email: email,
+          password: hash
+        }
+        // console.log( "user",user.id)
+        // //    jwt token
         // const token = jwt.sign({ userId: user_f.id }, "ABC!@#$", {
-        //     expiresIn: "1d"
-        //   })
-
-       const account = await Account.create({
-        A_name:"Account",
-        A_type:"saving",
-        user:user.id
+          //     expiresIn: "1d"
+          //   })
+          ).fetch()
+          await Account.create({
+            A_name:"Account",
+            A_type:"saving",
+            User:user.id
+          })
+  
+      res.send({
+        message: "user Register",
+        // token: token
       })
       
-    res.send({
-      message: "user Register",
-      account : account
-      // token: token
-    })
+    } catch (error) {
+      res.status(500).send({
+        error:error
+      })
+    }
   },
 
   //user login
@@ -75,6 +83,9 @@ module.exports = {
         //jwt token 
         const token = jwt.sign({ userId: user.id },sails.config.custom.JWT_Secret, {
           expiresIn: "1d"
+        })
+        res.cookie("token", token , {
+          httpOnly:true
         })
         if (match_p && (user.email === email)) {
           res.status(200).json({
@@ -97,6 +108,10 @@ module.exports = {
         message: "All field required"
       })
     }
+  },
+
+  user_add:async(req,res)=>{
+    
   },
 
   //user can update  details
@@ -122,10 +137,9 @@ module.exports = {
   },
 
   //user log_out 
-  log_out: async (req, res) => {
+  log_out:  (req, res) => {
     try {
-      const id = req.params.userId
-      await User.destroy({ id: id })
+      res.clearCookie('token');
       res.send({
         message: "user logout "
       })

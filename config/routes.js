@@ -23,11 +23,24 @@ module.exports.routes = {
 
   'get /user/list':'UserController.list_user',
   'post /user/sign_up':'UserController.sign_up',
-
   'post /user/login':'UserController.login',
-  
   'patch /user/update/:userId':'UserController.update',
-  'delete /user/logout/:userId':'UserController.log_out',
+  'get /user/logout/:userId':'UserController.log_out',
+
+
+  'get /account/list':'AccountController.get_Account',
+  'post /account/creat_A':'AccountController.create_Account',
+  'patch /account/update/:accountId':'AccountController.update_Account',
+  'delete /account/delete/:accountId':'AccountController.delete_Account',
+
+  'post /user/user_add':'AccountController.user_add',
+
+  'get /transcation/list':'TransactionController.get_transcation',
+  'post /transcation/add_T':'TransactionController.create_transcation',
+  'patch /transcation/update/:transactionId':'TransactionController.update_transcation',
+  'delete /transcation/delete/:transactionId':'TransactionController.delete_transcation',
+
+
 
 
 

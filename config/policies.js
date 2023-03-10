@@ -27,7 +27,6 @@ module.exports.policies = {
   //   'login':true,
   // },
   'UserController':{
-    'list_user':['auth'],
     'update':["auth"]
   }
 
