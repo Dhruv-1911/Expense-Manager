@@ -19,6 +19,7 @@ module.exports = {
     type: "String",
     required: true,
     unique: true,
+    isEmail:true
   },
   password: {
     type: 'string',
@@ -30,7 +31,12 @@ module.exports = {
   accounts:{
     collection:'account',
     via:'User'
-  }
+  },
+  
+  Accounts:{
+    collection:"account",
+    via:"Users"
+}
 }
 };
 

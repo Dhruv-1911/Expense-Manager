@@ -18,9 +18,9 @@ attributes:{
         collection:"transaction",
         via:"Account"
     },
-    user_e:{
-        type: 'json',
-        columnType: 'array'
+    Users:{
+        collection:"user",
+        via:"Accounts"
     }
 }
 };

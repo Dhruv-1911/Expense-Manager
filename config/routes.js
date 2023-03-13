@@ -19,7 +19,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': { view: 'pages/homepage' },
+  // '/': { view: 'pages/homepage' },
 
   'get /user/list':'UserController.list_user',
   'post /user/sign_up':'UserController.sign_up',
@@ -29,11 +29,12 @@ module.exports.routes = {
 
 
   'get /account/list':'AccountController.get_Account',
+  'get /account/:accountId':'AccountController.get_single_Account',
   'post /account/creat_A':'AccountController.create_Account',
+  'post /user/user_add':'AccountController.user_add',
   'patch /account/update/:accountId':'AccountController.update_Account',
   'delete /account/delete/:accountId':'AccountController.delete_Account',
 
-  'post /user/user_add':'AccountController.user_add',
 
   'get /transcation/list':'TransactionController.get_transcation',
   'post /transcation/add_T':'TransactionController.create_transcation',

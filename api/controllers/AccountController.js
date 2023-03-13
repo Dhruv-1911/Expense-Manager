@@ -2,22 +2,39 @@
 // const User = require("../models/User")
 
 
-
-
 module.exports = {
 
+    //get all account
     get_Account: async (req, res) => {
         try {
             const account = await Account.find()
-            .populate("transactions")
+                .populate("transactions")
             res.status(200).send({
                 message: " Here All Accouns",
-                count:account.length,
+                count: account.length,
                 accounts: account
             })
         } catch (error) {
             res.status(500).send({
                 message: "account not found"
+            })
+        }
+    },
+
+    //get single account
+    get_single_Account: async (req, res) => {
+        try {
+            id = req.params.accountId
+            const account = await Account.find({id: id})
+                .populate("transactions",{sort : "T_date DESC"})
+                
+            res.status(200).send({
+                account: account
+            })
+        } 
+        catch (error) {
+            res.status(500).send({
+                error: error
             })
         }
     },
@@ -28,7 +45,7 @@ module.exports = {
             const account = await Account.create({
                 A_name: A_name,
                 A_type: A_type,
-                User:User
+                User: User
             })
             res.status(201).send({
                 message: "Account created",
@@ -43,14 +60,35 @@ module.exports = {
             )
         }
     },
-    user_add: async (req,res)=> {
-        try {
-            const{ user_e , id }= req.body
-         await Account.addToCollection(id,"user_e")
-            .memebers([id])
-        //  user_e.push(user_e)
 
-        }  catch (error) {
+//add new user to account
+    user_add: async (req, res) => {
+        try {
+            const { User_e, id,U_id } = req.body
+            // console.log("id", id);
+            // console.log("user email:", User_e);
+            let account = await Account.find({ id: id })
+            // const user = await User.find({id:U_id})
+            // console.log(user[0].id);
+            if (account) {
+                // console.log(Boolean(account));
+                await Account.addToCollection(id, 'Users',User_e)
+                // .members(User_e)
+                //     .members([User_e])
+            //    account[0].User_email.push("User_e");
+                // account.save();
+            }
+
+            else {
+                res.status(404).send({
+                    message: "accound id not found"
+                })
+            }
+            res.status(201).res.send({
+                message: "user add"
+            })
+        }
+        catch (error) {
             res.status(500).json(
                 {
                     message: "not add"
@@ -59,17 +97,18 @@ module.exports = {
         }
     },
 
+    //update account
     update_Account: async (req, res) => {
         try {
-            const{A_name,A_type} = req.body
-            const id =req.params.accountId
+            const { A_name, A_type } = req.body
+            const id = req.params.accountId
             await Account.update({ id: id }).set({
                 A_name: A_name,
                 A_type: A_type,
-              });
-              res.status(200).send({
-                message:"Account update"
-              })
+            });
+            res.status(200).send({
+                message: "Account update"
+            })
         } catch (error) {
             res.status(500).json(
                 {
@@ -79,12 +118,13 @@ module.exports = {
         }
     },
 
+    //delete account
     delete_Account: async (req, res) => {
         try {
             id = req.params.accountId
-            await Account.destroy({ id: id })
+            await Account.destroy({ _id: id })
             res.status(200).send({
-                message:"Account Delete "
+                message: "Account Delete "
             })
         } catch (error) {
             res.status(500).json(

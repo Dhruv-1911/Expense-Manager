@@ -19,5 +19,7 @@ module.exports.custom = {
   // stripeSecret: 'sk_test_Zzd814nldl91104qor5911gjald',
   // …
 
-  JWT_Secret : "ABC!@#$"
+  JWT_Secret : "ABC!@#$",
+  PASS:"esalnwxuffumeolj"
+  
 };
