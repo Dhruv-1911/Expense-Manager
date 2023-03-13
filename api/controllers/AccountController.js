@@ -2,6 +2,8 @@
 // const User = require("../models/User")
 
 
+
+
 module.exports = {
 
     //get all account
@@ -62,40 +64,30 @@ module.exports = {
     },
 
 //add new user to account
-    user_add: async (req, res) => {
+    user_add:async(req,res)=>{
         try {
-            const { User_e, id,U_id } = req.body
-            // console.log("id", id);
-            // console.log("user email:", User_e);
-            let account = await Account.find({ id: id })
-            // const user = await User.find({id:U_id})
-            // console.log(user[0].id);
-            if (account) {
-                // console.log(Boolean(account));
-                await Account.addToCollection(id, 'Users',User_e)
-                // .members(User_e)
-                //     .members([User_e])
-            //    account[0].User_email.push("User_e");
-                // account.save();
-            }
+            const{email , id } = req.body
+            const users = await User.find({email})
+            .populate("Accounts")
 
-            else {
-                res.status(404).send({
-                    message: "accound id not found"
-                })
-            }
-            res.status(201).res.send({
-                message: "user add"
+            // console.log(users);
+          const account =   await Account.addToCollection(id,"Users",users.id)
+         console.log(account);
+            const user = await Account.find({id :id})
+            .populate("Users")
+            res.send({
+                message:"user add",
+                user
+            })
+            
+        } catch (error) {
+            res.status(500).send({
+                error:error
             })
         }
-        catch (error) {
-            res.status(500).json(
-                {
-                    message: "not add"
-                }
-            )
-        }
+
     },
+
 
     //update account
     update_Account: async (req, res) => {
@@ -117,6 +109,7 @@ module.exports = {
             )
         }
     },
+
 
     //delete account
     delete_Account: async (req, res) => {

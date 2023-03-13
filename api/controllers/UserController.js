@@ -127,6 +127,8 @@ module.exports = {
     }
   },
 
+  
+
   //user can update  details
   update: async (req, res) => {
     try {

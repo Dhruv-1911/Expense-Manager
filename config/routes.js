@@ -24,6 +24,7 @@ module.exports.routes = {
   'get /user/list':'UserController.list_user',
   'post /user/sign_up':'UserController.sign_up',
   'post /user/login':'UserController.login',
+
   'patch /user/update/:userId':'UserController.update',
   'get /user/logout/:userId':'UserController.log_out',
 
