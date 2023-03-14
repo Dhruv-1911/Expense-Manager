@@ -8,35 +8,38 @@
 module.exports = {
 
   attributes: {
-  // id:{
-  //   type:"String",
-  // },
-  name: {
-    type: "String",
-    required: true
-  },
-  email: {
-    type: "String",
-    required: true,
-    unique: true,
-    isEmail:true
-  },
-  password: {
-    type: 'string',
-    unique: true,
-    custom: function (value) {
-      return _.isString(value) && value.length >= 8;
+    // id:{
+    //   type:"String",
+    // },
+    name: {
+      type: "String",
+      required: true
+    },
+
+    email: {
+      type: "String",
+      required: true,
+      unique: true,
+      isEmail: true
+    },
+
+    password: {
+      type: 'string',
+      unique: true,
+      custom: function (value) {
+        return _.isString(value) && value.length >= 8;
+      }
+    },
+
+    accounts: {
+      collection: 'account',
+      via: 'User'
+    },
+
+    Accounts: {
+      collection: "account",
+      via: "Users"
     }
-  },
-  accounts:{
-    collection:'account',
-    via:'User'
-  },
-  
-  Accounts:{
-    collection:"account",
-    via:"Users"
-}
-}
+  }
 };
 

@@ -1,7 +1,3 @@
-// const Account = require("../models/Account")
-// const User = require("../models/User")
-
-
 
 
 module.exports = {
@@ -67,17 +63,22 @@ module.exports = {
     user_add:async(req,res)=>{
         try {
             const{email , id } = req.body
+            //here we get user id
             const users = await User.find({email})
-            .populate("Accounts")
+            console.log("user id",users[0].id);
+            //here we use manay to many Associations
+          const account =   await Account.addToCollection(id,"Users",users[0].id)
+         console.log("account",account);
 
-            // console.log(users);
-          const account =   await Account.addToCollection(id,"Users",users.id)
-         console.log(account);
             const user = await Account.find({id :id})
+            // .lean()
             .populate("Users")
+            
+            console.log(user[0].Users)
             res.send({
                 message:"user add",
-                user
+                New_User_add:user[0].Users.length,
+                users:user
             })
             
         } catch (error) {

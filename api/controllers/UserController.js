@@ -43,7 +43,7 @@ module.exports = {
           password: hash
         }
       ).fetch()
-        // send a  wel-come mail
+      // send a  wel-come mail
       let mailTransporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -127,7 +127,7 @@ module.exports = {
     }
   },
 
-  
+
 
   //user can update  details
   update: async (req, res) => {
@@ -140,14 +140,14 @@ module.exports = {
         email: email,
         password: hash
       });
-        res.send({
-          message: "user updated"
-        })
-      
+      res.send({
+        message: "user updated"
+      })
+
     }
     catch (error) {
       res.status(404).json({
-       error:error
+        error: error
       })
       console.log(error);
     }

@@ -15,16 +15,16 @@ module.exports = {
       columnType: 'Transcation_date',
       defaultsTo: Date.now()
     },
-    T_amount:{
-      type:'String',
-      required:true
+    T_amount: {
+      type: 'String',
+      required: true
     },
-    T_type:{
-      type:"String",
-      required:true
+    T_type: {
+      type: "String",
+      required: true
     },
-    Account:{
-      model:"account"
+    Account: {
+      model: "account"
     }
   },
 };
