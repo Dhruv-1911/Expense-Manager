@@ -20,6 +20,6 @@ module.exports.custom = {
   // …
 
   JWT_Secret : "ABC!@#$",
-  PASS:"esalnwxuffumeolj"
+  PASS:"adjueccrbftfzysi"
   
 };

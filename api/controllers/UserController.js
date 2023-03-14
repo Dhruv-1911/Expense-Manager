@@ -47,16 +47,16 @@ module.exports = {
       let mailTransporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'dhruvkakadiya1911@gmail.com',
+          user: 'kakadiyadhruv868@gmail.com',
           pass: sails.config.custom.PASS
         }
       });
 
       let mailDetails = {
-        from: 'dhruvkakadiya1911@gmail.com',
+        from: 'kakadiyadhruv868@gmail.com',
         to: email,
         subject: 'Expense Manager',
-        text: `hi ,${name} welcome to the Expense Manager App and your password is ${password} `
+        html: `hi ,${name} <br> welcome to the Expense Manager App and your password is ${password} `
       };
 
       mailTransporter.sendMail(mailDetails, function (err, data) {
@@ -83,7 +83,6 @@ module.exports = {
         error: error
       })
     }
-
   },
 
 
@@ -156,7 +155,7 @@ module.exports = {
   //user log_out 
   log_out: (req, res) => {
     try {
-      res.clearCookie("token");
+        res.clearCookie("token");
       res.send({
         message: "user logout "
       })
