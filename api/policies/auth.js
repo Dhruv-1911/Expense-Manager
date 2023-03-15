@@ -1,20 +1,29 @@
 
+const constant = require("../../config/constant")
 
- const jwt = require("jsonwebtoken")
 module.exports = (req, res, next) => {
    
     try {
         const token =req.cookies.token;
         // console.log(token);
-        const verify = jwt.verify(token, sails.config.custom.JWT_Secret);
-        // console.log(verify);
-        if(verify){
+        //here verify Jwt token
+        const verify = sails.config.constant.JWT.verify(token, sails.config.constant.JWT_Secret);
+        // req.user=verify;
+        // console.log("verify id" ,verify.userId);
+        // console.log("params",req.params.userId);
+        if(verify.userId === (req.params.userId || req.body.User)  || "account/list"){
             next();
-
         }
+        else{
+            res.status(404).json({
+                message:"not"
+            })
+        }
+        
     } catch (error) {
-    return res.status(401).json({
+     res.status(401).json({
         message:"auth failed"
     })  
+    // console.log(error);
     }
 }

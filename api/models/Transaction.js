@@ -8,21 +8,24 @@
 module.exports = {
 
   attributes: {
-    T_date: {
-      // type: 'datetime',
-      // defaultsTo: () => new Date()
+
+    TransactionDate: {
       type: 'ref',
       columnType: 'Transcation_date',
       defaultsTo: Date.now()
     },
-    T_amount: {
+
+    TransactionAmount: {
       type: 'String',
       required: true
     },
-    T_type: {
+
+    TranscationType: {
       type: "String",
       required: true
     },
+
+    //here we use Associations one to many one account has multiple transaction
     Account: {
       model: "account"
     }

@@ -8,6 +8,8 @@
  * https://sailsjs.com/docs/concepts/policies
  */
 
+const AccountController = require("../api/controllers/AccountController");
+const TransactionController = require("../api/controllers/TransactionController");
 const auth = require("../api/policies/auth");
 
 
@@ -21,13 +23,19 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': ['auth'],
-  // 'UserController':{
-  //   'sign_up':true,
-  //   'login':true,
-  // },
-  'UserController':{
-    'update':["auth"]
+  '*': 'auth',
+
+  UserController:{
+    'sign_up':true,
+    'login':true,
+  },
+
+  AccountController:{
+    'get_Account':true,
+  },
+
+  TransactionController:{
+    'get_Transcation':true
   }
 
 };

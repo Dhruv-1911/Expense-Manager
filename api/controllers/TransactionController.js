@@ -7,12 +7,13 @@
 
 module.exports = {
 
+
   //get all transcation
-  get_transcation: async (req, res) => {
+  get_Transcation: async (req, res) => {
     try {
-      const transaction = await Transaction.find()
+      let transaction = await Transaction.find()
         .sort([
-          { T_date: "DESC" },
+          { TransactionDate: "DESC" },
           { createdAt: "DESC" }
         ])
       res.status(200).send({
@@ -27,15 +28,16 @@ module.exports = {
   },
 
   //create transcation
-  create_transcation: async (req, res) => {
+  create_Transcation: async (req, res) => {
     try {
-      const { T_amount, T_type, Account, T_date } = req.body
-      await Transaction.create({
-        T_amount: T_amount,
-        T_type: T_type,
-        T_date: T_date,
-        Account: Account
-      })
+      let { TransactionAmount, TranscationType, Account, TransactionDate } = req.body
+      await Transaction.create(
+    {    TransactionAmount : TransactionAmount,
+        TranscationType: TranscationType,
+        TransactionDate: TransactionDate,
+        Account: Account}
+        // req.body
+      )
 
       res.status(201).send({
         message: "create transaction",
@@ -47,15 +49,16 @@ module.exports = {
       })
     }
   },
+
   //update transcation
-  update_transcation: async (req, res) => {
+  update_Transcation: async (req, res) => {
     try {
-      const { T_amount, T_type, T_date } = req.body
-      const id = req.params.transactionId
-      await Transaction.update({ id: id }).set({
-        T_amount: T_amount,
-        T_type: T_type,
-        T_date: T_date
+      let { TransactionAmount, TranscationType,TransactionDate } = req.body
+      let id = req.params.transactionId
+      await Transaction.update({_id: id }).set({
+        TransactionAmount: TransactionAmount,
+        TranscationType: TranscationType,
+        TransactionDate: TransactionDate
       });
       res.status(200).send({
         message: "Account update"
@@ -66,11 +69,12 @@ module.exports = {
       })
     }
   },
+
   //delete transcation
-  delete_transcation: async (req, res) => {
+  delete_Transcation: async (req, res) => {
     try {
-      const id = req.params.transactionId
-      await Transaction.destroyOne({ id: id })
+      let id = req.params.transactionId
+      await Transaction.destroyOne({_id: id })
       res.status(200).send({
         message: "transction delete"
       })
@@ -79,7 +83,6 @@ module.exports = {
         error: error
       })
     }
-  }
-
+  }        
 };
 

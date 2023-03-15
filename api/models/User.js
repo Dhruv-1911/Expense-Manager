@@ -8,33 +8,30 @@
 module.exports = {
 
   attributes: {
-    // id:{
-    //   type:"String",
-    // },
-    name: {
+    Name: {
       type: "String",
       required: true
     },
 
-    email: {
+    Email: {
       type: "String",
       required: true,
       unique: true,
       isEmail: true
     },
 
-    password: {
+    Password: {
       type: 'string',
       unique: true,
       custom: function (value) {
         return _.isString(value) && value.length >= 8;
       }
     },
-
-    accounts: {
-      collection: 'account',
-      via: 'User'
-    },
+    //Here One user has Multiple Account-- one to many Associations
+    // accounts: {
+    //   collection: 'account',
+    //   via: 'User'
+    // },
 
     Accounts: {
       collection: "account",
