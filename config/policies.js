@@ -25,9 +25,11 @@ module.exports.policies = {
 
   '*': 'auth',
 
+  
   UserController:{
     'sign_up':true,
     'login':true,
+    "list_user":true
   },
 
   AccountController:{

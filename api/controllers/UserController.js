@@ -5,11 +5,10 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
-const bcrypt = require('bcrypt');
-const cookieparser = require("cookie-parser")
-const nodemailer = require('nodemailer');
-// const constant = require("../../config/constant")
 
+const cookieparser = require("cookie-parser");
+
+const Constant = sails.config.constant
 
 module.exports = {
 
@@ -35,7 +34,8 @@ module.exports = {
     try {
 
       let { Name, Email, Password } = req.body
-      let hash = await bcrypt.hash(Password, sails.config.constant.SALT)
+      let hash = await Constant.bcrypt.hash(Password, Constant.SALT)
+      
       console.log(hash);
       let user = await User.create(
         {
@@ -52,29 +52,38 @@ module.exports = {
       })
 
       // Send a Welcome Email to new user
-      let mailTransporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'kakadiyadhruv868@gmail.com',
-          pass: sails.config.constant.PASS
-        }
-      });
+      // let mailTransporter = Constant.nodemailer.createTransport({
+      //   service: 'gmail',
+      //   auth: {
+      //     user: Constant.email,
+      //     pass: Constant.PASS
+      //   }
+      // });
+      // console.log(Constant.email);
 
-      let mailDetails = {
-        from: 'kakadiyadhruv868@gmail.com',
-        to: Email,
-        subject: 'Expense Manager',
-        html: `hi ,${Name} <br> welcome to the Expense Manager App and your password is ${Password} `
-      };
+      // let mailDetails = {
+      //   from: Constant.email ,
+      //   to: Email,
+      //   subject: 'Expense Manager',
+      //   html: `hi ,${Name} <br> welcome to the Expense Manager App and your password is ${Password} `
+      // };
 
-      mailTransporter.sendMail(mailDetails, function (err, data) {
-        if (err) {
-          console.log('Error Occurs');
-          console.log(err)
-        } else {
-          console.log('Email sent successfully');
-        }
-      });
+      // mailTransporter.sendMail(mailDetails, function (err, data) {
+      //   if (err) {
+      //     console.log('Error Occurs');
+      //     console.log(err)
+      //   } else {
+      //     console.log('Email sent successfully');
+      //   }
+      // });
+
+       await sails.helpers.sendEmail.with({
+        user:Constant.Email,
+        pass:Constant.PASS,
+        to:Email,
+        Name:Name,
+        Password:Password
+      })
 
       res.send({
         message: "user Register",
@@ -85,7 +94,7 @@ module.exports = {
       res.status(500).send({
         message: error
       })
-      // console.log(error);
+      console.log(error);
     }
   },
 
@@ -98,11 +107,12 @@ module.exports = {
       let user = await User.findOne({ Email: Email })
       if (user) {
         //password bcrypt compare 
-        let match_p = await bcrypt.compare(Password, user.Password)
+        let match_p = await Constant.bcrypt.compare(Password, user.Password)
         //jwt token 
-        let token = sails.config.constant.JWT.sign({ userId: user.id }, sails.config.constant.JWT_Secret, {
+        let token = Constant.JWT.sign({ userId: user.id }, Constant.JWT_Secret, {
           expiresIn: "1d"
         })
+        
         //here we send token with cookie
         res.cookie("token", token, {
           httpOnly: true
@@ -142,7 +152,7 @@ module.exports = {
       let user = await User.findOne({_id: id });
       console.log(user.id);
       if (user) {
-        let hash = await bcrypt.hash(Password, sails.config.constant.SALT)
+        let hash = await Constant.bcrypt.hash(Password, Constant.SALT)
         await User.update({ _id: id }).set({
           Name: Name,
           Email: Email,

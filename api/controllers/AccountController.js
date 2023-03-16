@@ -65,9 +65,10 @@ module.exports = {
     user_Add: async (req, res) => {
         try {
             let { Email, id } = req.body
-            //here we get user id
+            //here we get user id threw user email 
             let users = await User.find({ Email });
             // console.log("user id",users[0].id);
+            
             //here we use manay to many Associations
             let account = await Account.addToCollection(id, "Users", users[0].id)
             // console.log("account", account);

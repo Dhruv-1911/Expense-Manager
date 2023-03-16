@@ -27,16 +27,14 @@ module.exports = {
         return _.isString(value) && value.length >= 8;
       }
     },
-    //Here One user has Multiple Account-- one to many Associations
-    // accounts: {
-    //   collection: 'account',
-    //   via: 'User'
-    // },
 
+     //here we use many to many associations
     Accounts: {
       collection: "account",
       via: "Users"
-    }
+    },
+
+    
   }
 };
 

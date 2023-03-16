@@ -1,5 +1,4 @@
 
-const constant = require("../../config/constant")
 
 module.exports = (req, res, next) => {
    
@@ -7,11 +6,11 @@ module.exports = (req, res, next) => {
         const token =req.cookies.token;
         // console.log(token);
         //here verify Jwt token
-        const verify = sails.config.constant.JWT.verify(token, sails.config.constant.JWT_Secret);
+        const verify = Constant.JWT.verify(token, Constant.JWT_Secret);
         // req.user=verify;
         // console.log("verify id" ,verify.userId);
         // console.log("params",req.params.userId);
-        if(verify.userId === (req.params.userId || req.body.User)  || "account/list"){
+        if(verify.userId === (req.params.userId || req.body.User) ){
             next();
         }
         else{
