@@ -5,6 +5,7 @@
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 
+
 module.exports = {
 
   attributes: {
@@ -31,4 +32,3 @@ module.exports = {
     }
   },
 };
-

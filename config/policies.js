@@ -12,8 +12,6 @@ const AccountController = require("../api/controllers/AccountController");
 const TransactionController = require("../api/controllers/TransactionController");
 const auth = require("../api/policies/auth");
 
-
-
 module.exports.policies = {
 
   /***************************************************************************
@@ -25,19 +23,19 @@ module.exports.policies = {
 
   '*': 'auth',
 
-  
-  UserController:{
-    'sign_up':true,
-    'login':true,
-    "list_user":true
+  UserController: {
+    'sign_up': true,
+    'login': true,
+    "list_user": true
   },
 
-  AccountController:{
-    'get_Account':true,
+  AccountController: {
+    'get_Account': true,
+    "get_single_Account":true
   },
 
-  TransactionController:{
-    'get_Transcation':true
+  TransactionController: {
+    'get_Transcation': true,
   }
 
 };

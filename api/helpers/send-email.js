@@ -11,23 +11,23 @@ module.exports = {
 
   inputs: {
 
-    user:{
-      type:"ref",
-      required:true
+    user: {
+      type: "ref",
+      required: true
     },
-    pass:{
-      type:"ref",
-      required:true
+    pass: {
+      type: "ref",
+      required: true
     },
-    to:{
-      type:"ref",
-      required:true
+    to: {
+      type: "ref",
+      required: true
     },
-    Name:{
-      type:"ref"
+    Name: {
+      type: "ref"
     },
-    Password:{
-      type:"ref"
+    Password: {
+      type: "ref"
     }
 
   },
@@ -42,8 +42,8 @@ module.exports = {
   },
 
 
-  fn: async function (inputs,exits) {
-    
+  fn: async function (inputs, exits) {
+
     let mailTransporter = Constant.nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -56,7 +56,7 @@ module.exports = {
     // const { Email }= req.body
 
     let mailDetails = {
-      from: Constant.Email ,
+      from: Constant.Email,
       to: `${inputs.to}`,
       subject: 'Expense Manager',
       html: `hi ${inputs.Name},<br> welcome to the Expense Manager App and your Password is ${inputs.Password} `

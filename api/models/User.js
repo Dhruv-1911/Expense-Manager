@@ -28,13 +28,13 @@ module.exports = {
       }
     },
 
-     //here we use many to many associations
+    //here we use many to many associations
     Accounts: {
       collection: "account",
       via: "Users"
     },
 
-    
+
   }
 };
 

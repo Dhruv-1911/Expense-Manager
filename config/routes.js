@@ -21,25 +21,25 @@ module.exports.routes = {
 
   // '/': { view: 'pages/homepage' },
 
-  'get /user/list':'UserController.list_user',
-  'post /user/sign_up':'UserController.sign_up',
-  'post /user/login':'UserController.login',
-  'patch /user/update/:userId':'UserController.update',
-  'get /user/logout/:userId':'UserController.log_out',
+  'get /user/list': 'UserController.list_user',
+  'post /user/sign_up': 'UserController.sign_up',
+  'post /user/login': 'UserController.login',
+  'patch /user/update/:userId': 'UserController.update',
+  'get /user/logout/:userId': 'UserController.log_out',
 
 
-  'get /account/list':'AccountController.get_Account',
-  'get /account/:accountId':'AccountController.get_single_Account',
-  'post /account/creat_A':'AccountController.create_Account',
-  'post /user/user_add':'AccountController.user_Add',
-  'patch /account/update/:accountId':'AccountController.update_Account',
-  'delete /account/delete/:accountId':'AccountController.delete_Account',
+  'get /account/list': 'AccountController.get_Account',
+  'get /account/:accountId': 'AccountController.get_single_Account',
+  'post /account/creat_A': 'AccountController.create_Account',
+  'post /user/user_add': 'AccountController.user_Add',
+  'patch /account/update/:accountId': 'AccountController.update_Account',
+  'delete /account/delete/:accountId': 'AccountController.delete_Account',
 
 
-  'get /transcation/list':'TransactionController.get_Transcation',
-  'post /transcation/add_T':'TransactionController.create_Transcation',
-  'patch /transcation/update/:transactionId':'TransactionController.update_Transcation',
-  'delete /transcation/delete/:transactionId':'TransactionController.delete_Transcation',
+  'get /transcation/list': 'TransactionController.get_Transcation',
+  'post /transcation/add_T': 'TransactionController.create_Transcation',
+  'patch /transcation/update/:transactionId': 'TransactionController.update_Transcation',
+  'delete /transcation/delete/:transactionId': 'TransactionController.delete_Transcation',
 
 
 

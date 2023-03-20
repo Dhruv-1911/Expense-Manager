@@ -12,8 +12,9 @@ module.exports = {
   get_Transcation: async (req, res) => {
     try {
       let transaction = await Transaction.find()
+        .populate("Account")
         .sort([
-          { TransactionDate: "DESC" },
+          // { TransactionDate: "DESC" },
           { createdAt: "DESC" }
         ])
       res.status(200).send({
@@ -31,19 +32,27 @@ module.exports = {
   create_Transcation: async (req, res) => {
     try {
       let { TransactionAmount, TranscationType, Account, TransactionDate } = req.body
-      await Transaction.create(
-    {    TransactionAmount : TransactionAmount,
-        TranscationType: TranscationType,
-        TransactionDate: TransactionDate,
-        Account: Account}
-        // req.body
-      )
 
+      console.log("account", Account);
+      // const id = Account
+      // let users = await Account.findOne({ Account });
+      // console.log(users);
+
+      await Transaction.create(
+        {
+          TransactionAmount: TransactionAmount,
+          TranscationType: TranscationType,
+          TransactionDate: TransactionDate,
+          Account: Account,
+        }
+      )
       res.status(201).send({
         message: "create transaction",
-
       })
-    } catch (error) {
+
+    }
+    catch (error) {
+      console.log(error);
       res.status(500).send({
         error: "not created"
       })
@@ -53,9 +62,9 @@ module.exports = {
   //update transcation
   update_Transcation: async (req, res) => {
     try {
-      let { TransactionAmount, TranscationType,TransactionDate } = req.body
+      let { TransactionAmount, TranscationType, TransactionDate } = req.body
       let id = req.params.transactionId
-      await Transaction.update({_id: id }).set({
+      await Transaction.update({ _id: id }).set({
         TransactionAmount: TransactionAmount,
         TranscationType: TranscationType,
         TransactionDate: TransactionDate
@@ -74,7 +83,7 @@ module.exports = {
   delete_Transcation: async (req, res) => {
     try {
       let id = req.params.transactionId
-      await Transaction.destroyOne({_id: id })
+      await Transaction.destroyOne({ _id: id })
       res.status(200).send({
         message: "transction delete"
       })
@@ -83,6 +92,6 @@ module.exports = {
         error: error
       })
     }
-  }        
+  }
 };
 

@@ -6,7 +6,9 @@ module.exports = {
     get_Account: async (req, res) => {
         try {
             let account = await Account.find()
-                .populate("transactions"); //here we populate transactions table
+                .populate("transactions")
+                .populate("Users"); //here we populate transactions table
+                console.log(account);
             res.status(200).send({
                 message: " Here All Accouns",
                 count: account.length,
@@ -22,19 +24,25 @@ module.exports = {
     //get single account
     get_single_Account: async (req, res) => {
         try {
-            id = req.params.accountId
-            let account = await Account.findOne({ _id: id })
-                //For the selected account, get the list of transactions ordered by the transaction date descending
-                .populate("transactions", { sort: "T_date DESC" });
+           const id = req.params.accountId;
+           console.log(id);
+           
+          let account = await Account.findOne({ _id : id })
+
+            //For the selected account, get the list of transactions ordered by the transaction date descending
+            .populate("transactions", { sort: "createdAt DESC" });
+            console.log("123",account);
 
             res.status(200).send({
-                account: account
+                account: account,
             });
         }
+
         catch (error) {
             res.status(500).send({
-                message:"Account not Found"
+                message: "Account not Found"
             });
+            console.log("ssssssss",error);
         }
     },
 
@@ -42,6 +50,7 @@ module.exports = {
     create_Account: async (req, res) => {
         try {
             let { AccountName, AccountType, User } = req.body
+            // console.log(req.body.User);
             let account = await Account.create({
                 AccountName: AccountName,
                 AccountType: AccountType,
@@ -57,7 +66,8 @@ module.exports = {
                 {
                     message: "not created"
                 }
-            );
+                );
+                console.log(error);
         }
     },
 
@@ -65,10 +75,11 @@ module.exports = {
     user_Add: async (req, res) => {
         try {
             let { Email, id } = req.body
+
             //here we get user id threw user email 
             let users = await User.find({ Email });
             // console.log("user id",users[0].id);
-            
+
             //here we use manay to many Associations
             let account = await Account.addToCollection(id, "Users", users[0].id)
             // console.log("account", account);
@@ -86,7 +97,7 @@ module.exports = {
 
         } catch (error) {
             res.status(500).send({
-                message:"User not add"
+                message: "User not add"
             });
         }
 

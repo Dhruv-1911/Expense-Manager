@@ -8,6 +8,7 @@
 
 const cookieparser = require("cookie-parser");
 
+
 const Constant = sails.config.constant
 
 module.exports = {
@@ -46,37 +47,10 @@ module.exports = {
       ).fetch()
       // successful signup,create a user’s default account
       await Account.create({
-        // A_name: "Default Account",
-        // A_type: "saving",
         User: user.id
       })
 
-      // Send a Welcome Email to new user
-      // let mailTransporter = Constant.nodemailer.createTransport({
-      //   service: 'gmail',
-      //   auth: {
-      //     user: Constant.email,
-      //     pass: Constant.PASS
-      //   }
-      // });
-      // console.log(Constant.email);
-
-      // let mailDetails = {
-      //   from: Constant.email ,
-      //   to: Email,
-      //   subject: 'Expense Manager',
-      //   html: `hi ,${Name} <br> welcome to the Expense Manager App and your password is ${Password} `
-      // };
-
-      // mailTransporter.sendMail(mailDetails, function (err, data) {
-      //   if (err) {
-      //     console.log('Error Occurs');
-      //     console.log(err)
-      //   } else {
-      //     console.log('Email sent successfully');
-      //   }
-      // });
-
+      //here we use helper for sending wel-come mail
        await sails.helpers.sendEmail.with({
         user:Constant.Email,
         pass:Constant.PASS,
@@ -112,12 +86,12 @@ module.exports = {
         let token = Constant.JWT.sign({ userId: user.id }, Constant.JWT_Secret, {
           expiresIn: "1d"
         })
-        
+
         //here we send token with cookie
         res.cookie("token", token, {
           httpOnly: true
         })
-
+        
         if (match_p && (user.Email === Email)) {
           res.status(200).json({
             message: "user Login",
