@@ -17,7 +17,7 @@ module.exports = {
   list_user: async (req, res) => {
     try {
       let id = req.params.userId;
-      let users = await User.find({_id:id})
+      let users = await User.find({ _id: id })
         .populate("Accounts")//here we populate account model
       res.send({
         count: users.length,
@@ -35,8 +35,9 @@ module.exports = {
     try {
 
       let { Name, Email, Password } = req.body
+
       let hash = await Constant.bcrypt.hash(Password, Constant.SALT)
-      
+
       console.log(hash);
       let user = await User.create(
         {
@@ -45,23 +46,23 @@ module.exports = {
           Password: hash
         }
       ).fetch()
+
       // successful signup,create a user’s default account
       await Account.create({
         User: user.id
       })
 
       //here we use helper for sending wel-come mail
-       await sails.helpers.sendEmail.with({
-        user:Constant.Email,
-        pass:Constant.PASS,
-        to:Email,
-        Name:Name,
-        Password:Password
+      await sails.helpers.sendEmail.with({
+        user: Constant.Email,
+        pass: Constant.PASS,
+        to: Email,
+        Name: Name,
+        Password: Password
       })
 
       res.send({
         message: "user Register",
-        // token: token
 
       })
     } catch (error) {
@@ -79,20 +80,26 @@ module.exports = {
       let { Email, Password } = req.body
       //find email from database
       let user = await User.findOne({ Email: Email })
+      console.log(user);
       if (user) {
         //password bcrypt compare 
-        let match_p = await Constant.bcrypt.compare(Password, user.Password)
+        let match_p = await Constant.bcrypt.compare( Password, user.Password)
+        // console.log("1",Password);
+        // console.log("2",user.Password);
+        // console.log(match_p);
         //jwt token 
+
         let token = Constant.JWT.sign({ userId: user.id }, Constant.JWT_Secret, {
           expiresIn: "1d"
         })
 
-        //here we send token with cookie
-        res.cookie("token", token, {
-          httpOnly: true
-        })
-        
         if (match_p && (user.Email === Email)) {
+
+          //here we send token with cookie
+          res.cookie("token", token, {
+            httpOnly: true
+          })
+          
           res.status(200).json({
             message: "user Login",
             token: token
@@ -117,13 +124,15 @@ module.exports = {
   },
 
   //user can update details
+
   update: async (req, res) => {
     try {
       let { Name, Email, Password } = req.body
       let id = req.params.userId
-      console.log("paramsdmsd",id);
+      // console.log("params", id);
+      
       //create hash password
-      let user = await User.findOne({_id: id });
+      let user = await User.findOne({ _id: id });
       console.log(user.id);
       if (user) {
         let hash = await Constant.bcrypt.hash(Password, Constant.SALT)
@@ -151,6 +160,7 @@ module.exports = {
   },
 
   // here user log_out 
+
   log_out: async (req, res) => {
     try {
       //here we clear user cookie

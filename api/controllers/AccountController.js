@@ -25,14 +25,17 @@ module.exports = {
     get_single_Account: async (req, res) => {
         try {
            const id = req.params.accountId;
+        //    const uid=req.body.User
+        //    console.log("id",uid);
            console.log(id);
-           
+
+        //    await User.findOne({_id : uid})
           let account = await Account.findOne({ _id : id })
 
             //For the selected account, get the list of transactions ordered by the transaction date descending
             .populate("transactions", { sort: "createdAt DESC" });
             console.log("123",account);
-
+ 
             res.status(200).send({
                 account: account,
             });

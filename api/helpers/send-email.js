@@ -10,22 +10,26 @@ module.exports = {
 
 
   inputs: {
-
+    
     user: {
       type: "ref",
       required: true
     },
+   
     pass: {
       type: "ref",
       required: true
     },
+
     to: {
       type: "ref",
       required: true
     },
+
     Name: {
       type: "ref"
     },
+
     Password: {
       type: "ref"
     }
