@@ -10,7 +10,8 @@ module.exports = {
   attributes: {
     Name: {
       type: "String",
-      required: true
+      required: true,
+      minLength:5
     },
 
     Email: {
@@ -23,9 +24,10 @@ module.exports = {
     Password: {
       type: 'string',
       unique: true,
-      custom: function (value) {
-        return _.isString(value) && value.length >= 8;
-      }
+      // custom: function (value) {
+      //   return _.isString(value) && value.length >= 8;
+      // }
+    
     },
 
     //here we use many to many associations

@@ -10,9 +10,8 @@ module.exports = {
 
 
   inputs: {
-    
     user: {
-      type: "ref",
+      type: 'ref' ,
       required: true
     },
    

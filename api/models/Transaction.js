@@ -13,7 +13,7 @@ module.exports = {
     TransactionDate: {
       type: 'ref',
       columnType: 'Transcation_date',
-      defaultsTo: Date.now()
+      // defaultsTo: Date.now()
     },
 
     TransactionAmount: {
@@ -30,5 +30,6 @@ module.exports = {
     Account: {
       model: "account"
     }
+    
   },
 };

@@ -5,6 +5,8 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
+const { log } = require('grunt');
+const moment = require('moment')
 module.exports = {
 
 
@@ -38,16 +40,18 @@ module.exports = {
       // let users = await Account.findOne({ Account });
       // console.log(users);
 
-      await Transaction.create(
+     const data= await Transaction.create(
         {
           TransactionAmount: TransactionAmount,
           TranscationType: TranscationType,
-          TransactionDate: TransactionDate,
+          TransactionDate: moment(TransactionDate).format("DD/MM/YYYY"),//date formate
           Account: Account,
         }
-      )
+        ).fetch()
+        console.log(data);
       res.status(201).send({
-        message: "create transaction",
+        message: " 🤝 create transaction",
+        data
       })
 
     }
