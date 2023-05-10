@@ -22,6 +22,7 @@ module.exports = {
     },
 
     //get single account
+    //new
     get_single_Account: async (req, res) => {
         try {
            const id = req.params.accountId;
